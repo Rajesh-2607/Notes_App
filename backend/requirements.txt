@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+pydantic-settings
+httpx
+PyJWT[crypto]
+python-dotenv
+email-validator
+google-genai
+python-multipart
+supabase
