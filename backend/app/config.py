@@ -15,6 +15,11 @@ class Settings(BaseSettings):
     # Comma-separated list of allowed frontend origins, e.g.
     # "http://localhost:5173,https://your-app.vercel.app"
     CORS_ORIGINS: str = "http://localhost:5173"
+    # Regex for additional allowed origins - covers every URL Vercel generates for one
+    # account (production alias, git-branch alias, and a fresh per-deployment URL each
+    # deploy), so you don't have to add a new CORS_ORIGINS entry after every push.
+    # Example: r"^https://[a-z0-9-]+-rajesh-2607s-projects\.vercel\.app$"
+    CORS_ORIGIN_REGEX: str = ""
 
     model_config = SettingsConfigDict(
         env_file=".env",
