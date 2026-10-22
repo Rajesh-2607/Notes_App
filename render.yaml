@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: notes-rag-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      # Pinned: requirements are not yet verified against 3.13+.
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      # Supabase project settings -> API. Set these in the Render dashboard.
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      # Required for the RAG /chat endpoint.
+      - key: GEMINI_API_KEY
+        sync: false
+      # Set to the deployed Vercel URL once the frontend is live.
+      - key: CORS_ORIGINS
+        sync: false
+      # Matches every preview URL Vercel generates for the account, so new
+      # deploys do not need a CORS change.
+      - key: CORS_ORIGIN_REGEX
+        sync: false
